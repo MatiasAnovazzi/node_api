@@ -1,4 +1,4 @@
-let url = "http://localhost:3000/buscar"
+let url = "https://node-api-i5ik.onrender.com:3000/buscar"
 fetch(url, {
     method: "POST",
     headers: {
