@@ -3,7 +3,27 @@
     "axios": "^1.8.2",
     "cheerio": "^1.0.0",
     "cli-progress": "^3.12.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "progress": "^2.0.3",
     "puppeteer": "^24.4.0"
-  }
+  },
+  "name": "precios",
+  "version": "1.0.0",
+  "description": "Un servicio web para facilitar la busqueda de precios en algunas paginas",
+  "main": "api.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatiasAnovazzi/node_api.git"
+  },
+  "author": "Matias Anovazzi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatiasAnovazzi/node_api/issues"
+  },
+  "homepage": "https://github.com/MatiasAnovazzi/node_api#readme"
 }
