@@ -6,7 +6,6 @@ const PORT = 3000;
 
 // Middleware para parsear JSON y permitir CORS
 app.use(express.json());
-app.use(cors());
 app.get('/', (req, res) => {
     res.send('<h6>¡Funcionando!</h6>');
 });
