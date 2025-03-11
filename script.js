@@ -1,11 +1,7 @@
 import puppeteer from 'puppeteer';
-import chromium from 'chrome-aws-lambda';
 
 const buscarProductos = async (url, selectors) => {
-  const browser = await puppeteer.launch({
-    executablePath: await chromium.executablePath,
-    args: chromium.args,
-    headless: chromium.headless,
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
   const page = await browser.newPage();
 
@@ -80,3 +76,7 @@ export const buscarProductos_evophone = async (searchTerm) => {
   let res = await buscarProductos(url, selectors);
   return JSON.stringify(res)
 };
+ const proof = async () => {
+  let res = await buscarProductos_tiendamovil("modulo a04")
+  console.log(res)
+ }

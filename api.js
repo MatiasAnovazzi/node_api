@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import { buscarProductos_tiendamovil, buscarProductos_celuphone, buscarProductos_evophone } from './script.js';
 
 const app = express();
