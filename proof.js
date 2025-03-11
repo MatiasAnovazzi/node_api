@@ -1,4 +1,6 @@
-let url = "https://node-api-i5ik.onrender.com:3000/buscar"
+
+
+let url = "https://node-api-i5ik.onrender.com/buscar"
 fetch(url, {
     method: "POST",
     headers: {
@@ -11,4 +13,6 @@ fetch(url, {
 
 }).then(response => response.json()).then(data => {
     console.log(data)
+}).catch(err => {
+    console.log(err)
 })

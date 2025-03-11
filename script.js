@@ -2,7 +2,11 @@ import puppeteer from 'puppeteer';
 
 
 const buscarProductos = async (url, selectors) => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    executablePath: await chromium.executablePath,
+    args: chromium.args,
+    headless: chromium.headless,
+  });
   const page = await browser.newPage();
 
   // Configurar User-Agent para que parezca una versión de Chrome
