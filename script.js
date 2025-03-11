@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-
+import chromium from 'chrome-aws-lambda';
 
 const buscarProductos = async (url, selectors) => {
   const browser = await puppeteer.launch({
