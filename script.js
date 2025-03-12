@@ -19,7 +19,6 @@ console.log("aqui estoy 1")
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 1200000 });
   console.log("aqui estoy 2")
   // Esperar a que los precios carguen
-  await page.waitForSelector(selectors.item, { timeout: 100000 });
 
   // Extraer los datos de los productos
   const productos = await page.evaluate((selectors) => {
