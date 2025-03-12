@@ -1,8 +1,12 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromeLambda from 'chrome-aws-lambda';
 
 const buscarProductos = async (url, selectors) => {
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  const browser = await puppeteer.launch({
+    executablePath: await chromeLambda.executablePath,
+    args: chromeLambda.args,
+    headless: chromeLambda.headless,
+  })
   const page = await browser.newPage();
 
   // Configurar User-Agent para que parezca una versión de Chrome
