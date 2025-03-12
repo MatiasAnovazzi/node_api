@@ -1,32 +1,40 @@
-import axios from 'axios';
-import * as cheerio from 'cheerio';
-
+import puppeteer from 'puppeteer';
 
 const buscarProductos = async (url, selectors) => {
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-        'Cookie': selectors.cookie ? `${selectors.cookie.name}=${selectors.cookie.value}` : ''
-      },
-      timeout: 1200000
-    });
+  const browser = await puppeteer.launch({ headless : true
+  })
+  const page = await browser.newPage();
 
-    const $ = cheerio.load(response.data);
+  // Configurar User-Agent para que parezca una versión de Chrome
+  await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36');
 
-    const productos = $(selectors.item).map((i, item) => ({
-      nombre: $(item).find(selectors.nombre).text().trim() || 'Nombre no encontrado',
-      precio: $(item).find(selectors.precio).text().trim() || 'Precio no encontrado'
-    })).get();
+  // Agregar cookie si es necesario
+  if (selectors.cookie) {
+    const context = browser.defaultBrowserContext();
+    await context.setCookie(selectors.cookie);
+    console.log('Cookies configuradas:', await context.cookies());
+  }
+console.log("aqui estoy 1")
+  // Ir a la página de productos
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 1200000 });
+  console.log("aqui estoy 2")
+  // Esperar a que los precios carguen
+  await page.waitForSelector(selectors.item, { timeout: 100000 });
 
-    if (productos.length === 0) {
-      return "No hay productos en stock.";
-    } else {
-      return productos;
-    }
-  } catch (error) {
-    console.error('Error al buscar productos:', error);
-    return "Error al buscar productos.";
+  // Extraer los datos de los productos
+  const productos = await page.evaluate((selectors) => {
+    const items = document.querySelectorAll(selectors.item);
+    return Array.from(items).map(item => ({
+      nombre: item.querySelector(selectors.nombre)?.innerText.trim() || 'Nombre no encontrado',
+      precio: item.querySelector(selectors.precio)?.innerText.trim() || 'Precio no encontrado'
+    }));
+  }, selectors);
+  await browser.close();
+  // Verificar si el array de productos está vacío
+  if (productos.length === 0) {
+    return "No hay productos en stock."
+  } else {
+    return productos
   }
 };
 
@@ -43,7 +51,8 @@ export const buscarProductos_tiendamovil = async (searchTerm) => {
     }
   };
   let res = await buscarProductos(url, selectors);
-  return JSON.stringify(res);
+  
+  return JSON.stringify(res)
 };
 
 export const buscarProductos_celuphone = async (searchTerm) => {
@@ -54,7 +63,7 @@ export const buscarProductos_celuphone = async (searchTerm) => {
     precio: '.price span.woocommerce-Price-amount.amount bdi'
   };
   let res = await buscarProductos(url, selectors);
-  return JSON.stringify(res);
+  return JSON.stringify(res)
 };
 
 export const buscarProductos_evophone = async (searchTerm) => {
@@ -65,5 +74,15 @@ export const buscarProductos_evophone = async (searchTerm) => {
     precio: '.price span.woocommerce-Price-amount.amount bdi'
   };
   let res = await buscarProductos(url, selectors);
-  return JSON.stringify(res);
+  return JSON.stringify(res)
 };
+ const proof = async () => {
+  let res = [
+    await buscarProductos_tiendamovil('modulo e22'),
+    await buscarProductos_celuphone('modulo e22'),
+    await buscarProductos_evophone('modulo e22')
+  ]
+  console.log(res)
+ }
+
+ proof()

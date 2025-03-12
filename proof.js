@@ -7,8 +7,7 @@ fetch(url, {
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        producto: 'modulo a04',
-        tienda: "celuphone"
+        producto: 'modulo a04'
     })
 
 }).then(response => response.json()).then(data => {
