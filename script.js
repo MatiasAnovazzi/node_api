@@ -67,14 +67,3 @@ export const buscarProductos_evophone = async (searchTerm) => {
   let res = await buscarProductos(url, selectors);
   return JSON.stringify(res);
 };
-
-const proof = async () => {
-  let res = [
-    await buscarProductos_tiendamovil('modulo e22'),
-    await buscarProductos_celuphone('modulo e22'),
-    await buscarProductos_evophone('modulo e22')
-  ];
-  console.log(res);
-};
-
-proof();
