@@ -39,6 +39,7 @@ console.log("aqui estoy 1")
 
 export const buscarProductos_tiendamovil = async (searchTerm) => {
   const url = `https://tiendamovilrosario.com.ar/?s=${encodeURIComponent(searchTerm)}&post_type=product&et_search=true`;
+  console.log("buscando en tienda movil")
   const selectors = {
     item: '.etheme-product-grid-item',
     nombre: '.etheme-product-grid-content h2',
@@ -56,6 +57,7 @@ export const buscarProductos_tiendamovil = async (searchTerm) => {
 
 export const buscarProductos_celuphone = async (searchTerm) => {
   const url = `https://celuphone.com.ar/?s=${encodeURIComponent(searchTerm)}&post_type=product`;
+  console.log("buscando en celuphone")
   const selectors = {
     item: 'ul.products.columns-3 li.product',
     nombre: '.woocommerce-loop-product__title',
@@ -67,6 +69,7 @@ export const buscarProductos_celuphone = async (searchTerm) => {
 
 export const buscarProductos_evophone = async (searchTerm) => {
   const url = `https://evophone.com.ar/?s=${encodeURIComponent(searchTerm)}&post_type=product`;
+  console.log("buscando en evophone")
   const selectors = {
     item: 'div.products div.product-grid-item',
     nombre: 'h3',
